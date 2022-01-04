@@ -8,6 +8,10 @@ import { connect } from 'mongoose';
 import { UserResolver } from './resolvers/User';
 
 const main = async () => {
+  const PORT = process.env.PORT;
+  const DBHOST = process.env.DBHOST;
+  const DBNAME = process.env.DBNAME;
+
   const schema = await buildSchema({
     resolvers: [
       UserResolver
@@ -16,8 +20,6 @@ const main = async () => {
     validate: false,
   });
 
-  const DBHOST = process.env.DBHOST;
-  const DBNAME = process.env.DBNAME;
   const mongoose = await connect(`${ DBHOST }/${ DBNAME }`);
   await mongoose.connection;
 
@@ -32,9 +34,9 @@ const main = async () => {
 
   server.applyMiddleware({ app });
 
-  app.listen({ port: 3333 }, () =>
+  app.listen({ port: PORT }, () =>
     console.log(
-      `🚀 Server ready and listening at ==> http://localhost:3333${server.graphqlPath}`
+      `🚀 Server ready and listening at ==> http://localhost:${PORT}${server.graphqlPath}`
     )
   );
 };

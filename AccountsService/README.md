@@ -7,3 +7,4 @@
 
 *From repo root:*
 - ``` > docker-compose up --build ```
+- In Browser -> ``` http://localhost:3001/graphql ```

@@ -5,7 +5,7 @@ services:
     image: mongo:4.2.8
     container_name: db-accounts
     ports:
-      - "5001:27017"
+      - "4001:27017"
     restart: "always"
 
   accounts-service:
@@ -18,7 +18,7 @@ services:
       - /tmp/accounts-service/npm-cache:/root/.npm:z
       - ./AccountsService/src:/usr/src/app/src:z
     ports:
-      - "4001:80"
+      - "3001:80"
     environment:
       - PORT=80
       - NODE_ENV=development
