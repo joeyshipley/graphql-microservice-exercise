@@ -1,5 +1,8 @@
 .DS_Store
 
+# GraphQL <- Unsure if this should be checked in or not. Need to do the research.
+schema.gql
+
 # Logs
 logs
 *.log
