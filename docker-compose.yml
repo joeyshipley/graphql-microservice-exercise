@@ -1,0 +1,29 @@
+version: '3'
+services:
+
+  db-accounts:
+    image: mongo:4.2.8
+    container_name: db-accounts
+    ports:
+      - "5001:27017"
+    restart: "always"
+
+  accounts-service:
+    image: accounts-service
+    build:
+      context: ./AccountsService
+      dockerfile: DockerfileDEV
+    container_name: accounts-service
+    volumes:
+      - /tmp/accounts-service/npm-cache:/root/.npm:z
+      - ./AccountsService/src:/usr/src/app/src:z
+    ports:
+      - "4001:80"
+    environment:
+      - PORT=80
+      - NODE_ENV=development
+      - DBHOST=mongodb://db-accounts:27017
+      - DBNAME=accounts-db
+    env_file:
+      - ./AccountsService/.env.local
+    restart: "no"
