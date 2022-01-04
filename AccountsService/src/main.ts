@@ -1,4 +1,4 @@
 import { greeter } from './temp';
 
-greeter('Hello')
+greeter('Hello.')
     .then((result: string) => { console.log(result); });

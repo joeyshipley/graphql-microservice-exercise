@@ -13,7 +13,6 @@ function delayedHello(
     );
 }
 
-// @ts-ignore
 export async function greeter(name: string) {
     return await delayedHello(name, Delays.Long);
 }
