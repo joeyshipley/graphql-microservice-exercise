@@ -4,8 +4,7 @@ import Express from 'express';
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
 import { connect } from 'mongoose';
-
-import { UserResolver } from './resolvers/User';
+import resolvers from './resolvers';
 
 const main = async () => {
   const PORT = process.env.PORT;
@@ -13,9 +12,7 @@ const main = async () => {
   const DBNAME = process.env.DBNAME;
 
   const schema = await buildSchema({
-    resolvers: [
-      UserResolver
-    ],
+    resolvers: resolvers,
     emitSchemaFile: true,
     validate: false,
   });

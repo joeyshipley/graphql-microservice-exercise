@@ -3,7 +3,6 @@ import { prop as Property, getModelForClass } from '@typegoose/typegoose';
 
 @ObjectType({ description: 'The User model' })
 export class User {
-  [x: string]: any;
   @Field(() => ID)
   id: number;
 

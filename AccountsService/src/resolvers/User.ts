@@ -5,30 +5,26 @@ import {
   Query,
 } from 'type-graphql';
 import { User, UserModel } from '../entities/User';
-import { UserInput } from './types/user-input';
+import { UserCreateRequest } from './types/user-create-request';
 
 @Resolver((_of) => User)
 export class UserResolver {
   @Query((_returns) => User, { nullable: false })
   async returnSingleUser(@Arg('id') id: string) {
-    return await UserModel.findById({ _id: id });
+    return UserModel.findById({ _id: id });
   }
 
   @Query(() => [User])
   async returnAllUsers() {
-    return await UserModel.find();
+    return UserModel.find();
   }
 
   @Mutation(() => User)
   async createUser(
-    @Arg('data') { username, email }: UserInput
+    @Arg('request', { validate: true }) request: UserCreateRequest
   ): Promise<User> {
-    const user = (
-      await UserModel.create({
-        username,
-        email,
-      })
-    ).save();
+    const user = (await UserModel.create(request))
+      .save();
     return user;
   }
 
