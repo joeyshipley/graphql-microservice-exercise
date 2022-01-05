@@ -13,7 +13,7 @@ export class UserCreateRequest implements Partial<User> {
   username: String;
 
   @Field()
-  @IsEmail()
+  @IsEmail({},{ message: 'Email is required and must be in an email format.' })
   @Unique(UniqueEmailConstraint, { message: 'Email is not available.'})
   email: String;
 }

@@ -6,6 +6,10 @@
 - ``` > docker-compose up --build ```
 - In Browser -> ``` http://localhost:3001/graphql ```
 
+## Running the Tests
+- ``` > docker-compose -f docker-compose.TESTS.yml up ```
+- ``` > npm test ```
+
 ## Tech Info
 - Boilerplate > https://github.com/finallyayo/typescript-graphql
 - TypeGoose > https://github.com/typegoose/typegoose

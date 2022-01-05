@@ -1,0 +1,10 @@
+version: '3'
+services:
+
+  db-accounts-tests:
+    image: mongo:4.2.8
+    container_name: db-accounts-tests
+    ports:
+      - "9001:27017"
+    restart: "always"
+

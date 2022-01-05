@@ -4,12 +4,14 @@ import Express from 'express';
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
 import { connect } from 'mongoose';
-import resolvers from './resolvers';
+import resolvers from '../resolvers';
 
-const main = async () => {
-  const PORT = process.env.PORT;
-  const DBHOST = process.env.DBHOST;
-  const DBNAME = process.env.DBNAME;
+type EnvValue = string | undefined;
+
+const startServer = async (settings: { port: EnvValue, dbHost: EnvValue, dbName: EnvValue })  => {
+  const PORT = settings.port;
+  const DBHOST = settings.dbHost;
+  const DBNAME = settings.dbName;
 
   const schema = await buildSchema({
     resolvers: resolvers,
@@ -36,8 +38,8 @@ const main = async () => {
       `🚀 Server ready and listening at ==> http://localhost:${PORT}${server.graphqlPath}`
     )
   );
+
+  return app;
 };
 
-main().catch((error) => {
-  console.log(error, 'error');
-});
+export default startServer;
