@@ -1,0 +1,10 @@
+version: '3'
+services:
+
+  db-characters-tests:
+    image: mongo:4.2.8
+    container_name: db-characters-tests
+    ports:
+      - "9002:27017"
+    restart: "always"
+

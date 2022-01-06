@@ -1,10 +1,8 @@
 import chai from 'chai';
-import { ENV } from '../../src/server/environment-variables';
 import * as express from 'express';
 import { Response } from 'supertest';
 import startServer from '../../src/server';
-import sinon from 'sinon';
-import { UserModel } from '../../src/domain/users/user.entity';
+import { CharacterModel } from '../../src/domain/characters/character.entity';
 import { ValidationMessage } from '../../src/types';
 
 export const should = chai.should();
@@ -14,21 +12,17 @@ let app: express.Express | null = null;
 export async function init() {
   if(app) { return app; };
 
-  const envSandbox = sinon.createSandbox();
-  envSandbox.stub(ENV, 'ENCRYPT_SALT').value('1d0jjf1030j12s18r1yg31o8ng86sm5o');
-  envSandbox.stub(ENV, 'ENCRYPT_KEY').value('SUPERSECRETKEY');
-
   const settings = {
     port: '9000',
-    dbHost: 'mongodb://localhost:9001',
-    dbName: 'accounts-db'
+    dbHost: 'mongodb://localhost:9002',
+    dbName: 'characters-db'
   };
   app = await startServer(settings);
   return app;
 }
 
 export async function dbReset() {
-  await UserModel.deleteMany();
+  await CharacterModel.deleteMany();
 }
 
 // TODO: consider home (and/or implementation) for this, it will also be needed on the client/consumer side.

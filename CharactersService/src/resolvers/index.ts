@@ -1,7 +1,7 @@
 import { NonEmptyArray } from 'type-graphql';
-import { AccountsResolver } from './accounts.resolver';
+import { CharactersResolver } from './characters.resolver';
 
 const resolvers: NonEmptyArray<Function> = [
-  AccountsResolver
+  CharactersResolver
 ];
 export default resolvers;

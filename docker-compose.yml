@@ -8,6 +8,13 @@ services:
       - "4001:27017"
     restart: "always"
 
+  db-characters:
+    image: mongo:4.2.8
+    container_name: db-characters
+    ports:
+      - "4002:27017"
+    restart: "always"
+
   accounts-service:
     image: accounts-service
     build:
@@ -24,6 +31,24 @@ services:
       - NODE_ENV=development
       - DBHOST=mongodb://db-accounts:27017
       - DBNAME=accounts-db
-    env_file:
-      - ./AccountsService/.env.local
+      - ENCRYPT_SALT=1d0jjf1030j12s18r1yg31o8ng86sm5o
+      - ENCRYPT_KEY=SUPERSECRETKEY
+    restart: "no"
+
+  characters-service:
+    image: characters-service
+    build:
+      context: ./CharactersService
+      dockerfile: DockerfileDEV
+    container_name: characters-service
+    volumes:
+      - /tmp/characters-service/npm-cache:/root/.npm:z
+      - ./CharactersService/src:/usr/src/app/src:z
+    ports:
+      - "3002:80"
+    environment:
+      - PORT=80
+      - NODE_ENV=development
+      - DBHOST=mongodb://db-characters:27017
+      - DBNAME=characters-db
     restart: "no"

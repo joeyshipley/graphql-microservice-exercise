@@ -1,10 +1,10 @@
-# AccountsService GraphQL
+# CharactersService GraphQL
 
 ## Setup
 
 *From repo root:*
 - ``` > docker-compose up --build ```
-- In Browser -> ``` http://localhost:3001/graphql ```
+- In Browser -> ``` http://localhost:3002/graphql ```
 
 ## Running the Tests
 - ``` > npm install ```
@@ -20,31 +20,28 @@
 - TypeGraphQL && ClassValidator > https://typegraphql.com/docs/validation.html
 
 ## GraphQL Playground Examples
-*Mutation: Create UserEntity*
+*Mutation: Create Character*
 ```
 mutation {
-  registerUser(request: { 
-    username: "test user 1", 
-    email: "test1@test.com",
-    password: "TEST@test123",
-    passwordConfirmation: "TEST@test123"
+  createCharacter(request: { 
+    name: "Sir Big Bird",
   }) {
-    user {
+    character {
       id
-      email
-      username
+      playerId
+      name
       createdOn
     }
   }
 }
 ```
-*Query: All Users*
+*Query: All Characters*
 ```
 query {
-  allUsers {
+  allCharacters {
     id
-    email
-    username
+    playerId
+    name
     createdOn
   }
 }
