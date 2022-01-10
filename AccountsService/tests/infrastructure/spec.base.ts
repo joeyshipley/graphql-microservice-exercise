@@ -4,7 +4,7 @@ import * as express from 'express';
 import { Response } from 'supertest';
 import startServer from '../../src/server';
 import sinon from 'sinon';
-import { UserModel } from '../../src/domain/users/user.entity';
+import { UserModel } from '../../src/domain/users/user';
 import { ValidationMessage } from '../../src/types';
 
 export const should = chai.should();

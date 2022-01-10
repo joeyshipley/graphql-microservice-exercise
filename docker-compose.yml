@@ -15,6 +15,22 @@ services:
       - "4002:27017"
     restart: "always"
 
+  federation-gateway:
+    image: federation-gateway
+    build:
+      context: ./GraphGateway
+      dockerfile: DockerfileDEV
+    container_name: federation-gateway
+    volumes:
+      - /tmp/federation-gateway/npm-cache:/root/.npm:z
+      - ./GraphGateway/src:/usr/src/app/src:z
+    ports:
+      - "3000:80"
+    environment:
+      - PORT=80
+      - NODE_ENV=development
+    restart: "no"
+
   accounts-service:
     image: accounts-service
     build:

@@ -5,7 +5,7 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface
 } from 'class-validator';
-import { UserModel } from '../domain/users/user.entity';
+import { UserModel } from '../domain/users/user';
 
 export function Unique(validator: Function | ValidatorConstraintInterface, validationOptions?: ValidationOptions) {
   return function (object: Object, propertyName: string) {

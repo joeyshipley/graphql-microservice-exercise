@@ -6,4 +6,5 @@ COPY tsconfig.json ./
 
 CMD npm config set cache-min 9999999 && \
   npm install && \
-  npm run dev:docker-compose
+  npm run build-ts && \
+  npm run start

@@ -1,8 +1,9 @@
-import { ObjectType, Field, ID } from 'type-graphql';
+import { Directive, Field, ID, ObjectType } from 'type-graphql';
 import { prop as Property, getModelForClass } from '@typegoose/typegoose';
 
+@Directive(`@key(fields: "id")`)
 @ObjectType()
-export class UserEntity {
+export class User {
   @Field(() => ID)
   id: number;
 
@@ -22,4 +23,4 @@ export class UserEntity {
   createdOn: Date;
 }
 
-export const UserModel = getModelForClass(UserEntity);
+export const UserModel = getModelForClass(User);

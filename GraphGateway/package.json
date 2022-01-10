@@ -1,0 +1,12 @@
+{
+  "name": "graphgateway",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node ./src/index.js"
+  },
+  "dependencies": {
+    "@apollo/gateway": "^0.45.1",
+    "apollo-server": "^3.6.1",
+    "graphql": "^15.8.0"
+  }
+}

@@ -1,8 +1,12 @@
+import gql from 'graphql-tag';
+import { printSchema } from 'graphql';
+import { buildSubgraphSchema } from '@apollo/subgraph';
+import { buildSchema, BuildSchemaOptions, createResolversMap } from 'type-graphql';
+
 import { ApolloServer } from 'apollo-server-express';
 import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
 import Express from 'express';
 import 'reflect-metadata';
-import { buildSchema } from 'type-graphql';
 import { connect } from 'mongoose';
 import resolvers from '../resolvers';
 import { EnvValue } from "../types";
@@ -12,17 +16,24 @@ const startServer = async (settings: { port: EnvValue, dbHost: EnvValue, dbName:
   const DBHOST = settings.dbHost;
   const DBNAME = settings.dbName;
 
-  const schema = await buildSchema({
-    resolvers: resolvers,
-    emitSchemaFile: true,
-    validate: false,
-  });
-
   const mongoose = await connect(`${ DBHOST }/${ DBNAME }`);
   await mongoose.connection;
 
+  const options: BuildSchemaOptions = {
+    resolvers: resolvers,
+    emitSchemaFile: true,
+    validate: true,
+    skipCheck: true,
+  };
+  const schema = await buildSchema(options);
+
+  const federatedSchema = buildSubgraphSchema({
+    typeDefs: gql(printSchema(schema)),
+    resolvers: createResolversMap(schema) as any,
+  });
+
   const server = new ApolloServer({
-    schema,
+    schema: federatedSchema,
     plugins: [ ApolloServerPluginLandingPageGraphQLPlayground ],
   });
 
@@ -42,3 +53,4 @@ const startServer = async (settings: { port: EnvValue, dbHost: EnvValue, dbName:
 };
 
 export default startServer;
+

@@ -1,6 +1,7 @@
-import { ObjectType, Field, ID } from 'type-graphql';
+import { Directive, Field, ID, ObjectType } from 'type-graphql';
 import { prop as Property, getModelForClass } from '@typegoose/typegoose';
 
+@Directive(`@key(fields: "id")`)
 @ObjectType()
 export class Character {
   @Field(() => ID)

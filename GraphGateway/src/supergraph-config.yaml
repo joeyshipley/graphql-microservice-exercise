@@ -1,0 +1,9 @@
+subgraphs:
+  accounts:
+    routing_url: http://accounts-service:80/graphql
+    schema:
+      subgraph_url: http://localhost:3001/graphql
+  characters:
+    routing_url: http://characters-service:80/graphql
+    schema:
+      subgraph_url: http://localhost:3002/graphql

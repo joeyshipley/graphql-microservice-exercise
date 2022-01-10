@@ -1,0 +1,84 @@
+schema
+  @core(feature: "https://specs.apollo.dev/core/v0.2"),
+  @core(feature: "https://specs.apollo.dev/join/v0.1", for: EXECUTION)
+{
+  query: Query
+  mutation: Mutation
+}
+
+directive @core(as: String, feature: String!, for: core__Purpose) repeatable on SCHEMA
+
+directive @join__field(graph: join__Graph, provides: join__FieldSet, requires: join__FieldSet) on FIELD_DEFINITION
+
+directive @join__graph(name: String!, url: String!) on ENUM_VALUE
+
+directive @join__owner(graph: join__Graph!) on INTERFACE | OBJECT
+
+directive @join__type(graph: join__Graph!, key: join__FieldSet) repeatable on INTERFACE | OBJECT
+
+type Character {
+  createdOn: DateTime!
+  id: ID!
+  name: String!
+  playerId: ID!
+}
+
+input CharacterCreationRequest {
+  name: String!
+}
+
+type CharacterCreationResult {
+  character: Character!
+}
+
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
+type Mutation {
+  createCharacter(request: CharacterCreationRequest!): CharacterCreationResult! @join__field(graph: CHARACTERS)
+  registerUser(request: UserRegistrationRequest!): UserRegistrationResult! @join__field(graph: ACCOUNTS)
+}
+
+type Query {
+  allCharacters: [Character!]! @join__field(graph: CHARACTERS)
+  allUsers: [User!]! @join__field(graph: ACCOUNTS)
+  findUser(id: String!): User! @join__field(graph: ACCOUNTS)
+}
+
+type User {
+  createdOn: DateTime!
+  id: ID!
+  username: String!
+}
+
+input UserRegistrationRequest {
+  email: String!
+  password: String!
+  passwordConfirmation: String!
+  username: String!
+}
+
+type UserRegistrationResult {
+  user: User!
+}
+
+enum core__Purpose {
+  """
+  `EXECUTION` features provide metadata necessary to for operation execution.
+  """
+  EXECUTION
+
+  """
+  `SECURITY` features provide metadata necessary to securely resolve fields.
+  """
+  SECURITY
+}
+
+scalar join__FieldSet
+
+enum join__Graph {
+  ACCOUNTS @join__graph(name: "accounts" url: "http://accounts-service:80/graphql")
+  CHARACTERS @join__graph(name: "characters" url: "http://characters-service:80/graphql")
+}

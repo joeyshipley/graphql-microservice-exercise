@@ -1,4 +1,4 @@
-import startServer from './server';
+import startServer from './server/index';
 import { ENV } from './server/environment-variables';
 
 const PORT = ENV.PORT;

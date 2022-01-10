@@ -2,7 +2,7 @@ import { IsEmail, IsNotEmpty, Length, Matches, validate } from 'class-validator'
 import { ArgumentValidationError, Field, InputType, ObjectType } from 'type-graphql';
 import { encryptPassword } from '../../server/encryption';
 import { DATE } from '../../util/date-time-util';
-import { UserEntity, UserModel } from './user.entity';
+import { User, UserModel } from './user';
 import {
   MatchProperty,
   Unique,
@@ -14,7 +14,7 @@ import {
 @ObjectType()
 export class UserRegistrationResult {
   @Field()
-  user?: UserEntity;
+  user?: User;
 }
 
 @InputType()

@@ -1,5 +1,8 @@
 # AccountsService GraphQL
 
+## NOTE!
+- Apollo Federation restricts Node to maximum of v16.13.1
+
 ## Setup
 
 *From repo root:*
@@ -18,6 +21,7 @@
 - TypeGraphQL > https://github.com/MichalLytek/type-graphql
 - ClassValidator > https://github.com/typestack/class-validator
 - TypeGraphQL && ClassValidator > https://typegraphql.com/docs/validation.html
+- GraphQL Federation > https://github.com/MichalLytek/type-graphql/tree/master/examples/apollo-federation
 
 ## GraphQL Playground Examples
 *Mutation: Create UserEntity*

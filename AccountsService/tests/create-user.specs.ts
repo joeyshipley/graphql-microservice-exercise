@@ -2,7 +2,7 @@
 import { init, should, dbReset, getValidationMessages } from './infrastructure/spec.base';
 import * as express from 'express';
 import { agent } from 'supertest';
-import { UserModel } from '../src/domain/users/user.entity';
+import { UserModel } from '../src/domain/users/user';
 
 // TODO: consider builder helper for the mutations in each of the test cases here.
 
