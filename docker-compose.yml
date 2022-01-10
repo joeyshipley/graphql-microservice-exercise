@@ -19,7 +19,7 @@ services:
     image: federation-gateway
     build:
       context: ./GraphGateway
-      dockerfile: DockerfileDEVNOWATCH
+      dockerfile: DockerfileDEV
     container_name: federation-gateway
     volumes:
       - /tmp/federation-gateway/npm-cache:/root/.npm:z

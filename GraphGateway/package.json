@@ -2,12 +2,16 @@
   "name": "graphgateway",
   "version": "1.0.0",
   "scripts": {
-    "start": "node ./src/index.js"
+    "start": "node ./src/index.js",
+    "dev:docker-compose": "nodemon --watch src ./src/index.js"
   },
   "dependencies": {
     "@apollo/gateway": "^0.45.1",
     "apollo-server": "^3.6.1",
     "graphql": "^15.8.0",
     "wait-on": "^6.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }

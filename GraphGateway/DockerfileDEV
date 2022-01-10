@@ -2,8 +2,7 @@ FROM node:16.13.1-alpine
 
 WORKDIR /usr/src/app
 COPY package*.json ./
-COPY ./src ./src
 
 CMD npm config set cache-min 9999999 && \
   npm install && \
-  npm start
+  npm run dev:docker-compose
