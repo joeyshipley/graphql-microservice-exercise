@@ -43,6 +43,8 @@ const startServer = async (settings: { port: EnvValue, dbHost: EnvValue, dbName:
 
   server.applyMiddleware({ app });
 
+  // @ts-ignore
+  app.get('/health', (req, res) => { res.status(200).send('Ok'); });
   app.listen({ port: PORT }, () =>
     console.log(
       `🚀 Server ready and listening at ==> http://localhost:${PORT}${server.graphqlPath}`
@@ -53,4 +55,3 @@ const startServer = async (settings: { port: EnvValue, dbHost: EnvValue, dbName:
 };
 
 export default startServer;
-

@@ -19,7 +19,7 @@ services:
     image: federation-gateway
     build:
       context: ./GraphGateway
-      dockerfile: DockerfileDEV
+      dockerfile: DockerfileDEVNOWATCH
     container_name: federation-gateway
     volumes:
       - /tmp/federation-gateway/npm-cache:/root/.npm:z
@@ -29,6 +29,8 @@ services:
     environment:
       - PORT=80
       - NODE_ENV=development
+      - ACCOUNTS_URL=http://accounts-service:80
+      - CHARACTERS_URL=http://characters-service:80
     restart: "no"
 
   accounts-service:
