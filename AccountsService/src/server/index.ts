@@ -9,7 +9,7 @@ import Express from 'express';
 import 'reflect-metadata';
 import { connect } from 'mongoose';
 import resolvers from '../resolvers';
-import { EnvValue } from "../types";
+import { EnvValue } from '../types';
 
 const startServer = async (settings: { port: EnvValue, dbHost: EnvValue, dbName: EnvValue })  => {
   const PORT = settings.port;
@@ -29,11 +29,15 @@ const startServer = async (settings: { port: EnvValue, dbHost: EnvValue, dbName:
 
   const federatedSchema = buildSubgraphSchema({
     typeDefs: gql(printSchema(schema)),
-    resolvers: createResolversMap(schema) as any,
+    resolvers: createResolversMap(schema) as any
   });
 
   const server = new ApolloServer({
     schema: federatedSchema,
+    context: ({ req }) => {
+      const context = (req.headers['graph-context']) ? JSON.parse(req.headers['graph-context'] as string) : null;
+      return context;
+    },
     plugins: [ ApolloServerPluginLandingPageGraphQLPlayground ],
   });
 

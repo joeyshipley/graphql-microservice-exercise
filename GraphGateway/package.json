@@ -8,7 +8,10 @@
   "dependencies": {
     "@apollo/gateway": "^0.45.1",
     "apollo-server": "^3.6.1",
+    "bcrypt": "^5.0.1",
     "graphql": "^15.8.0",
+    "jsonwebtoken": "^8.5.1",
+    "string-crypto": "^2.0.2",
     "wait-on": "^6.0.0"
   },
   "devDependencies": {

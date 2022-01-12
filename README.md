@@ -1,6 +1,6 @@
 # TEMP README
 
-## License
+### License
 - This repository is covered by the [MIT license](https://opensource.org/licenses/MIT).
 
 ### SETUP
@@ -10,3 +10,6 @@
 ### RUN
 - ``` > docker-compose up --build ```
 - ``` BROWSER > http://localhost:3000 ```
+
+### TODO
+- Authentication Token Refresh (set expiration to 15-30 minutes when that happens).

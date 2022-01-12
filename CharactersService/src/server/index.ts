@@ -34,6 +34,10 @@ const startServer = async (settings: { port: EnvValue, dbHost: EnvValue, dbName:
 
   const server = new ApolloServer({
     schema: federatedSchema,
+    context: ({ req }) => {
+      const context = (req.headers['graph-context']) ? JSON.parse(req.headers['graph-context'] as string) : null;
+      return context;
+    },
     plugins: [ ApolloServerPluginLandingPageGraphQLPlayground ],
   });
 

@@ -29,6 +29,9 @@ services:
     environment:
       - PORT=80
       - NODE_ENV=development
+      - ENCRYPT_SALT=1d0jjf1030j12s18r1yg31o8ng86sm5o
+      - ENCRYPT_KEY=SUPERSECRETKEY
+      - TOKEN_KEY=my-32-character-ultra-secure-and-ultra-long-secret
       - ACCOUNTS_URL=http://accounts-service:80
       - CHARACTERS_URL=http://characters-service:80
     restart: "no"
@@ -51,6 +54,7 @@ services:
       - DBNAME=accounts-db
       - ENCRYPT_SALT=1d0jjf1030j12s18r1yg31o8ng86sm5o
       - ENCRYPT_KEY=SUPERSECRETKEY
+      - TOKEN_KEY=my-32-character-ultra-secure-and-ultra-long-secret
     restart: "no"
 
   characters-service:

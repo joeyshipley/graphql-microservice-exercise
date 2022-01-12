@@ -3,24 +3,28 @@ import { prop as Property, getModelForClass } from '@typegoose/typegoose';
 
 @Directive(`@key(fields: "id")`)
 @ObjectType()
-export class User {
+export class UserEntity {
   @Field(() => ID)
   id: number;
 
   @Field()
   @Property({ required: true })
-  username: String;
+  username: string;
 
   @Field()
   @Property({ required: true })
-  email: String;
+  email: string;
 
   @Property({ required: true })
-  password: String;
+  password: string;
 
   @Field()
   @Property({ required: true })
-  createdOn: Date;
+  createdOn: string;
+
+  @Field()
+  @Property({ required: false })
+  lastLoggedOn: string;
 }
 
-export const UserModel = getModelForClass(User);
+export const UserModel = getModelForClass(UserEntity);

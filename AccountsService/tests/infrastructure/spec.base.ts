@@ -4,7 +4,7 @@ import * as express from 'express';
 import { Response } from 'supertest';
 import startServer from '../../src/server';
 import sinon from 'sinon';
-import { UserModel } from '../../src/domain/users/user';
+import { UserModel } from '../../src/domain/users/user.entity';
 import { ValidationMessage } from '../../src/types';
 
 export const should = chai.should();
@@ -17,6 +17,7 @@ export async function init() {
   const envSandbox = sinon.createSandbox();
   envSandbox.stub(ENV, 'ENCRYPT_SALT').value('1d0jjf1030j12s18r1yg31o8ng86sm5o');
   envSandbox.stub(ENV, 'ENCRYPT_KEY').value('SUPERSECRETKEY');
+  envSandbox.stub(ENV, 'TOKEN_KEY').value('my-32-character-ultra-secure-and-ultra-long-secret');
 
   const settings = {
     port: '9000',

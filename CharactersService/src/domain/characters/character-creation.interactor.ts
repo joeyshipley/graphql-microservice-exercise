@@ -1,4 +1,4 @@
-import { Length, validate } from 'class-validator';
+import { Length, IsNotEmpty, validate } from 'class-validator';
 import { ArgumentValidationError, Field, InputType, ObjectType } from 'type-graphql';
 import { Character, CharacterModel } from './character.entity';
 import { DATE } from '../../util/date-time-util';
@@ -11,6 +11,11 @@ export class CharacterCreationResult {
 
 @InputType()
 export class CharacterCreationRequest {
+  @IsNotEmpty({
+    message: 'Player is missing.'
+  })
+  playerId: string;
+
   @Field()
   @Length(4, 35, {
     message: 'Character Name must be length of $constraint1 to $constraint2.',
@@ -25,7 +30,7 @@ export async function call(request: CharacterCreationRequest): Promise<Character
   }
 
   let data = {
-    playerId: '61d9ffacec86bc044a1abf93',
+    playerId: request.playerId,
     name: request.name,
     createdOn: DATE.utcNow()
   };

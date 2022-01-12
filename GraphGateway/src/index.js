@@ -1,8 +1,9 @@
 const { ApolloServer } = require('apollo-server');
-const { ApolloGateway } = require('@apollo/gateway');
+const { ApolloGateway, RemoteGraphQLDataSource } = require('@apollo/gateway');
 const waitOn = require('wait-on');
+const auth = require('./auth.middleware');
+const { ENV } = require('./environment-variables');
 
-const PORT = process.env.PORT || 3000;
 const accountsUrl = process.env.ACCOUNTS_URL || 'http://localhost:3001';
 const charactersUrl = process.env.CHARACTERS_URL || 'http://localhost:3002';
 
@@ -13,6 +14,14 @@ async function startServer() {
   ];
   const gateway = new ApolloGateway({
     serviceList,
+    buildService({ name, url }) {
+      return new RemoteGraphQLDataSource({
+        url,
+        willSendRequest({ request, context }) {
+          request.http.headers.set('graph-context', JSON.stringify(context));
+        }
+      })
+    }
   });
   const { schema, executor } = await gateway.load();
   const server = new ApolloServer({
@@ -20,10 +29,12 @@ async function startServer() {
     executor,
     tracing: false,
     playground: true,
+    context: auth,
+    subscriptions: false
   });
 
   return server
-    .listen({ port: PORT })
+    .listen({ port: ENV.PORT })
     .then(({ url }) => {
       console.log(`Apollo Gateway ready at ${ url }`);
     })
