@@ -1,7 +1,9 @@
-import { Length, IsNotEmpty, validate } from 'class-validator';
-import { ArgumentValidationError, Field, InputType, ObjectType } from 'type-graphql';
+import { Length, IsNotEmpty } from 'class-validator';
+import { Field, InputType, ObjectType } from 'type-graphql';
 import { Character, CharacterModel } from './character.entity';
 import { DATE } from '../../util/date-time-util';
+import { validate, InputValidationErrors } from '../../util/class-validator.util';
+
 
 @ObjectType()
 export class CharacterCreationResult {
@@ -26,7 +28,7 @@ export class CharacterCreationRequest {
 export async function call(request: CharacterCreationRequest): Promise<CharacterCreationResult> {
   const validations = await validate(request);
   if(validations.length > 0) {
-    throw new ArgumentValidationError(validations);
+    throw new InputValidationErrors(validations);
   }
 
   let data = {

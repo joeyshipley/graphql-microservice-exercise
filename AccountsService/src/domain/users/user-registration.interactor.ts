@@ -1,5 +1,5 @@
-import { IsEmail, IsNotEmpty, Length, Matches, validate } from 'class-validator';
-import { ArgumentValidationError, Field, InputType, ObjectType } from 'type-graphql';
+import { IsEmail, IsNotEmpty, Length, Matches } from 'class-validator';
+import { Field, InputType, ObjectType } from 'type-graphql';
 import { encryptPassword } from '../../server/encryption';
 import { DATE } from '../../util/date-time-util';
 import { UserEntity, UserModel } from './user.entity';
@@ -7,8 +7,11 @@ import {
   MatchProperty,
   Unique,
   UniqueEmailConstraint,
-  UniqueUsernameConstraint
+  UniqueUsernameConstraint,
+  validate,
+  InputValidationErrors
 } from '../../util/class-validator.util';
+
 
 @ObjectType()
 export class UserRegistrationResult {
@@ -46,7 +49,7 @@ export class UserRegistrationRequest {
 export async function call(request: UserRegistrationRequest): Promise<UserRegistrationResult> {
   const validations = await validate(request);
   if(validations.length > 0) {
-    throw new ArgumentValidationError(validations);
+    throw new InputValidationErrors(validations);
   }
 
   let data = {

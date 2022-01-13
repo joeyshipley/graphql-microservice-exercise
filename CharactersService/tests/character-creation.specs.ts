@@ -1,7 +1,8 @@
 // @ts-ignore
-import { init, should, dbReset, getValidationMessages } from './infrastructure/spec.base';
+import { init, should, dbReset } from './infrastructure/spec.base';
 import * as express from 'express';
 import { agent } from 'supertest';
+import { ValidationMessage } from '../src/types';
 
 describe('Create Character', () => {
   let app: express.Express;
@@ -60,8 +61,9 @@ describe('Create Character', () => {
       `});
 
     res.status.should.equal(200);
-    const validation = res.body.errors.find((v: any) => { return v.message == 'Not logged in.' });
-    should.exist(validation);
+
+    const errorCode = res.body.errors[0].extensions.code;
+    errorCode.should.equal('UNAUTHENTICATED');
   });
 
   it('Name is required', async () => {
@@ -85,8 +87,11 @@ describe('Create Character', () => {
 
     res.status.should.equal(200);
 
-    const validations = getValidationMessages(res);
-    const validation = validations.find((v) => { return v.property == 'name' && v.value == 'Character Name must be length of 4 to 35.' });
+    const errorCode = res.body.errors[0].extensions.code;
+    errorCode.should.equal('VALIDATION_ERRORS');
+
+    const validations = res.body.errors[0].extensions.validations;
+    const validation = validations.find((v: ValidationMessage) => { return v.property == 'name' && v.value == 'Character Name must be length of 4 to 35.' });
     should.exist(validation);
   });
 });

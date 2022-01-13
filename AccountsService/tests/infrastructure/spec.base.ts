@@ -1,11 +1,9 @@
 import chai from 'chai';
 import { ENV } from '../../src/server/environment-variables';
 import * as express from 'express';
-import { Response } from 'supertest';
 import startServer from '../../src/server';
 import sinon from 'sinon';
 import { UserModel } from '../../src/domain/users/user.entity';
-import { ValidationMessage } from '../../src/types';
 
 export const should = chai.should();
 
@@ -30,22 +28,4 @@ export async function init() {
 
 export async function dbReset() {
   await UserModel.deleteMany();
-}
-
-// TODO: consider home (and/or implementation) for this, it will also be needed on the client/consumer side.
-// NOTE: will decide once I see what the consumer looks like on the GraphQL client.
-export function getValidationMessages(response: Response): ValidationMessage[] {
-  let messages: ValidationMessage[] = [];
-  if(!response.body.errors) { return messages; }
-
-  for(let error of response.body.errors) {
-    const validations = error.extensions.exception.validationErrors;
-    for(let validation of validations) {
-      let properties = Object.values(validation.constraints);
-      for (let propertyValue of properties) {
-        messages.push({ property: validation.property, value: propertyValue as string | null });
-      }
-    }
-  }
-  return messages;
 }

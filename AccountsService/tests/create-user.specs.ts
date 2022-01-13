@@ -1,8 +1,9 @@
 // @ts-ignore
-import { init, should, dbReset, getValidationMessages } from './infrastructure/spec.base';
+import { init, should, dbReset } from './infrastructure/spec.base';
 import * as express from 'express';
 import { agent } from 'supertest';
 import { UserModel } from '../src/domain/users/user.entity';
+import { ValidationMessage } from '../src/types';
 
 describe('Create UserEntity', () => {
   let app: express.Express;
@@ -63,8 +64,11 @@ describe('Create UserEntity', () => {
 
     res.status.should.equal(200);
 
-    const validations = getValidationMessages(res);
-    const validation = validations.find((v) => { return v.property == 'username' && v.value == 'Username must be length of 5 to 35.' });
+    const errorCode = res.body.errors[0].extensions.code;
+    errorCode.should.equal('VALIDATION_ERRORS');
+
+    const validations = res.body.errors[0].extensions.validations;
+    const validation = validations.find((v: ValidationMessage) => { return v.property == 'username' && v.value == 'Username must be length of 5 to 35.' });
     should.exist(validation);
   });
 
@@ -106,8 +110,11 @@ describe('Create UserEntity', () => {
     res1.status.should.equal(200);
     res2.status.should.equal(200);
 
-    const validations = getValidationMessages(res2);
-    const validation = validations.find((v) => { return v.property == 'username' && v.value == 'Username is not available.' });
+    const errorCode = res2.body.errors[0].extensions.code;
+    errorCode.should.equal('VALIDATION_ERRORS');
+
+    const validations = res2.body.errors[0].extensions.validations;
+    const validation = validations.find((v: ValidationMessage) => { return v.property == 'username' && v.value == 'Username is not available.' });
     should.exist(validation);
   });
 
@@ -131,8 +138,11 @@ describe('Create UserEntity', () => {
 
     res.status.should.equal(200);
 
-    const validations = getValidationMessages(res);
-    const validation = validations.find((v) => { return v.property == 'email' && v.value == 'Email is required and must be in an email format.' });
+    const errorCode = res.body.errors[0].extensions.code;
+    errorCode.should.equal('VALIDATION_ERRORS');
+
+    const validations = res.body.errors[0].extensions.validations;
+    const validation = validations.find((v: ValidationMessage) => { return v.property == 'email' && v.value == 'Email is required and must be in an email format.' });
     should.exist(validation);
   });
 
@@ -174,8 +184,11 @@ describe('Create UserEntity', () => {
     res1.status.should.equal(200);
     res2.status.should.equal(200);
 
-    const validations = getValidationMessages(res2);
-    const validation = validations.find((v) => { return v.property == 'email' && v.value == 'Email is not available.' });
+    const errorCode = res2.body.errors[0].extensions.code;
+    errorCode.should.equal('VALIDATION_ERRORS');
+
+    const validations = res2.body.errors[0].extensions.validations;
+    const validation = validations.find((v: ValidationMessage) => { return v.property == 'email' && v.value == 'Email is not available.' });
     should.exist(validation);
   });
 
@@ -199,8 +212,11 @@ describe('Create UserEntity', () => {
 
     res.status.should.equal(200);
 
-    const validations = getValidationMessages(res);
-    const validation = validations.find((v) => { return v.property == 'password' && v.value == 'Password must be length of 8 to 55.' });
+    const errorCode = res.body.errors[0].extensions.code;
+    errorCode.should.equal('VALIDATION_ERRORS');
+
+    const validations = res.body.errors[0].extensions.validations;
+    const validation = validations.find((v: ValidationMessage) => { return v.property == 'password' && v.value == 'Password must be length of 8 to 55.' });
     should.exist(validation);
   });
 
@@ -222,9 +238,11 @@ describe('Create UserEntity', () => {
           }
         `});
 
-    res.status.should.equal(200);
-    const validations = getValidationMessages(res);
-    const validation = validations.find((v) => { return v.property == 'passwordConfirmation' && v.value == 'Password Confirmation is required.' });
+    const errorCode = res.body.errors[0].extensions.code;
+    errorCode.should.equal('VALIDATION_ERRORS');
+
+    const validations = res.body.errors[0].extensions.validations;
+    const validation = validations.find((v: ValidationMessage) => { return v.property == 'passwordConfirmation' && v.value == 'Password Confirmation is required.' });
     should.exist(validation);
   });
 
@@ -248,8 +266,11 @@ describe('Create UserEntity', () => {
 
     res.status.should.equal(200);
 
-    const validations = getValidationMessages(res);
-    const validation = validations.find((v) => { return v.property == 'passwordConfirmation' && v.value == 'Password and Password Confirmation must match.' });
+    const errorCode = res.body.errors[0].extensions.code;
+    errorCode.should.equal('VALIDATION_ERRORS');
+
+    const validations = res.body.errors[0].extensions.validations;
+    const validation = validations.find((v: ValidationMessage) => { return v.property == 'passwordConfirmation' && v.value == 'Password and Password Confirmation must match.' });
     should.exist(validation);
   });
 
@@ -273,8 +294,11 @@ describe('Create UserEntity', () => {
 
     res.status.should.equal(200);
 
-    const validations = getValidationMessages(res);
-    const validation = validations.find((v) => { return v.property == 'password' && v.value == 'Password must be length of 8 to 55.' });
+    const errorCode = res.body.errors[0].extensions.code;
+    errorCode.should.equal('VALIDATION_ERRORS');
+
+    const validations = res.body.errors[0].extensions.validations;
+    const validation = validations.find((v: ValidationMessage) => { return v.property == 'password' && v.value == 'Password must be length of 8 to 55.' });
     should.exist(validation);
   });
 
@@ -298,8 +322,11 @@ describe('Create UserEntity', () => {
 
     res.status.should.equal(200);
 
-    const validations = getValidationMessages(res);
-    const validation = validations.find((v) => { return v.property == 'password' && v.value == 'Password must be length of 8 to 55.' });
+    const errorCode = res.body.errors[0].extensions.code;
+    errorCode.should.equal('VALIDATION_ERRORS');
+
+    const validations = res.body.errors[0].extensions.validations;
+    const validation = validations.find((v: ValidationMessage) => { return v.property == 'password' && v.value == 'Password must be length of 8 to 55.' });
     should.exist(validation);
   });
 
@@ -323,8 +350,11 @@ describe('Create UserEntity', () => {
 
     res.status.should.equal(200);
 
-    const validations = getValidationMessages(res);
-    const validation = validations.find((v) => { return v.property == 'password' && v.value == 'Password must contain an Uppercase and Lowercase letter, along with a Number and a Special character.' });
+    const errorCode = res.body.errors[0].extensions.code;
+    errorCode.should.equal('VALIDATION_ERRORS');
+
+    const validations = res.body.errors[0].extensions.validations;
+    const validation = validations.find((v: ValidationMessage) => { return v.property == 'password' && v.value == 'Password must contain an Uppercase and Lowercase letter, along with a Number and a Special character.' });
     should.exist(validation);
   });
 
@@ -348,8 +378,11 @@ describe('Create UserEntity', () => {
 
     res.status.should.equal(200);
 
-    const validations = getValidationMessages(res);
-    const validation = validations.find((v) => { return v.property == 'password' && v.value == 'Password must contain an Uppercase and Lowercase letter, along with a Number and a Special character.' });
+    const errorCode = res.body.errors[0].extensions.code;
+    errorCode.should.equal('VALIDATION_ERRORS');
+
+    const validations = res.body.errors[0].extensions.validations;
+    const validation = validations.find((v: ValidationMessage) => { return v.property == 'password' && v.value == 'Password must contain an Uppercase and Lowercase letter, along with a Number and a Special character.' });
     should.exist(validation);
   });
 
@@ -373,8 +406,11 @@ describe('Create UserEntity', () => {
 
     res.status.should.equal(200);
 
-    const validations = getValidationMessages(res);
-    const validation = validations.find((v) => { return v.property == 'password' && v.value == 'Password must contain an Uppercase and Lowercase letter, along with a Number and a Special character.' });
+    const errorCode = res.body.errors[0].extensions.code;
+    errorCode.should.equal('VALIDATION_ERRORS');
+
+    const validations = res.body.errors[0].extensions.validations;
+    const validation = validations.find((v: ValidationMessage) => { return v.property == 'password' && v.value == 'Password must contain an Uppercase and Lowercase letter, along with a Number and a Special character.' });
     should.exist(validation);
   });
 
@@ -398,8 +434,11 @@ describe('Create UserEntity', () => {
 
     res.status.should.equal(200);
 
-    const validations = getValidationMessages(res);
-    const validation = validations.find((v) => { return v.property == 'password' && v.value == 'Password must contain an Uppercase and Lowercase letter, along with a Number and a Special character.' });
+    const errorCode = res.body.errors[0].extensions.code;
+    errorCode.should.equal('VALIDATION_ERRORS');
+
+    const validations = res.body.errors[0].extensions.validations;
+    const validation = validations.find((v: ValidationMessage) => { return v.property == 'password' && v.value == 'Password must contain an Uppercase and Lowercase letter, along with a Number and a Special character.' });
     should.exist(validation);
   });
 

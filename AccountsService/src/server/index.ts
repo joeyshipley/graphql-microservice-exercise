@@ -22,7 +22,7 @@ const startServer = async (settings: { port: EnvValue, dbHost: EnvValue, dbName:
   const options: BuildSchemaOptions = {
     resolvers: resolvers,
     emitSchemaFile: true,
-    validate: true,
+    validate: false,
     skipCheck: true,
   };
   const schema = await buildSchema(options);

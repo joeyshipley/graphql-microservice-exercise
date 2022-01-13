@@ -1,17 +1,15 @@
-import { IsEmail, Length, Matches, validate } from 'class-validator';
+import { IsEmail, Length, Matches } from 'class-validator';
 import { DATE } from '../../util/date-time-util';
 import { checkPassword, encryptData } from '../../server/encryption';
 import { ENV } from '../../server/environment-variables';
 import jwt from 'jsonwebtoken';
-import { ArgumentValidationError, Field, InputType, ObjectType } from 'type-graphql';
+import { Field, InputType, ObjectType } from 'type-graphql';
 import { AuthPayload } from '../../types';
 import { UserModel } from './user.entity';
+import { validate, InputValidationErrors } from '../../util/class-validator.util';
 
 @ObjectType()
 export class LoginResult {
-  @Field()
-  authenticated: Boolean;
-
   @Field()
   token: string;
 }
@@ -34,17 +32,17 @@ export class LoginRequest {
 export async function call(request: LoginRequest): Promise<LoginResult> {
   const validations = await validate(request);
   if(validations.length > 0) {
-    throw new ArgumentValidationError(validations);
+    throw new InputValidationErrors(validations);
   }
 
   let user = await UserModel.findOne({ email: request.email });
   if(!user) {
-    return { authenticated: false, token: '' }; // TODO: look at how to create a Class-Validation ValidationError or consider dropping the library.
+    throw new InputValidationErrors([ { property: 'none', value: 'Unable to login with the supplied data.' } ]);
   }
 
   const validPassword = checkPassword(request.password as string, user?.password as string);
   if(!validPassword) {
-    return { authenticated: false, token: '' };
+    throw new InputValidationErrors([ { property: 'none', value: 'Unable to login with the supplied data.' } ]);
   }
 
   // TODO: will refresh need this also? If so, will need to be moved.
@@ -64,5 +62,5 @@ export async function call(request: LoginRequest): Promise<LoginResult> {
   user.lastLoggedOn = DATE.utcNow();
   await user.save();
 
-  return { authenticated: true, token };
+  return { token };
 }
