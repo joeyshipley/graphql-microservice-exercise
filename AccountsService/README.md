@@ -24,7 +24,7 @@
 - GraphQL Federation > https://github.com/MichalLytek/type-graphql/tree/master/examples/apollo-federation
 
 ## GraphQL Playground Examples
-*Mutation: Create UserEntity*
+*Mutation: Create User*
 ```
 mutation {
   registerUser(request: { 

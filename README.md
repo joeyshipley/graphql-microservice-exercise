@@ -13,3 +13,6 @@
 
 ### TODO
 - Authentication Token Refresh (set expiration to 15-30 minutes when that happens).
+- Feature: Change Password
+- Feature: Verify Email Address
+- Feature: Forgot Password

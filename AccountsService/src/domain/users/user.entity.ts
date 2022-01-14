@@ -3,7 +3,7 @@ import { prop as Property, getModelForClass } from '@typegoose/typegoose';
 
 @Directive(`@key(fields: "id")`)
 @ObjectType()
-export class UserEntity {
+export class User {
   @Field(() => ID)
   id: number;
 
@@ -27,4 +27,4 @@ export class UserEntity {
   lastLoggedOn: string;
 }
 
-export const UserModel = getModelForClass(UserEntity);
+export const UserModel = getModelForClass(User);

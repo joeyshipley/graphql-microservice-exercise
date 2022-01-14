@@ -5,7 +5,7 @@ import { agent } from 'supertest';
 import { UserModel } from '../src/domain/users/user.entity';
 import { ValidationMessage } from '../src/types';
 
-describe('Create UserEntity', () => {
+describe('Create User', () => {
   let app: express.Express;
 
   beforeEach(async () => {
