@@ -1,10 +1,10 @@
 // @ts-ignore
-import { init, should, dbReset } from './infrastructure/spec.base';
+import { init, should, dbReset } from '../infrastructure/spec.base';
 import * as express from 'express';
 import { agent } from 'supertest';
 // @ts-ignore
-import { loadUser } from './helpers/user.loader';
-import { ValidationMessage } from '../src/types';
+import { loadUser } from '../helpers/user.loader';
+import { ValidationMessage } from '../../src/types';
 
 describe('Login', () => {
   let app: express.Express;

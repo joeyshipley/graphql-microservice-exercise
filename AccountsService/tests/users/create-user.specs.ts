@@ -1,9 +1,9 @@
 // @ts-ignore
-import { init, should, dbReset } from './infrastructure/spec.base';
+import { init, should, dbReset } from '../infrastructure/spec.base';
 import * as express from 'express';
 import { agent } from 'supertest';
-import { UserModel } from '../src/domain/users/user.entity';
-import { ValidationMessage } from '../src/types';
+import { UserModel } from '../../src/domain/users/user.entity';
+import { ValidationMessage } from '../../src/types';
 
 describe('Create User', () => {
   let app: express.Express;
