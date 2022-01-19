@@ -1,4 +1,4 @@
-import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+import { ApolloClient, InMemoryCache, gql, ApolloLink, HttpLink } from '@apollo/client';
 import { ENV } from './environment-variables';
 
 const FETCHQL = {
@@ -7,8 +7,8 @@ const FETCHQL = {
 };
 export default FETCHQL;
 
-async function performQueryCall(graphCommandContent) {
-  const client = getGraphClient();
+async function performQueryCall(graphCommandContent, options = {}) {
+  const client = getGraphClient(options);
   return await client.query({
     query: gql`${ graphCommandContent }`
   })
@@ -16,8 +16,8 @@ async function performQueryCall(graphCommandContent) {
     .catch(parseServerGraphError);
 }
 
-async function performMutationCall(graphCommandContent) {
-  const client = getGraphClient();
+async function performMutationCall(graphCommandContent, options = {}) {
+  const client = getGraphClient(options);
   return await client.mutate({
     mutation: gql`${ graphCommandContent }`
   })
@@ -25,12 +25,25 @@ async function performMutationCall(graphCommandContent) {
     .catch(parseServerGraphError);
 }
 
-function getGraphClient() {
+function getGraphClient(options) {
   const client = new ApolloClient({
-    uri: ENV.SERVER_GRAPH_URL,
+    link: buildLink(options.authToken),
     cache: new InMemoryCache()
   });
   return client;
+}
+
+function buildLink(authToken = null) {
+  const apolloLink = new ApolloLink((operation, forward) => {
+    operation.setContext({
+      headers: {
+        authorization: authToken ? `Bearer ${ authToken }` : ''
+      }
+    });
+    return forward(operation);
+  });
+  const httpLink = new HttpLink({ uri: ENV.SERVER_GRAPH_URL });
+  return apolloLink.concat(httpLink);
 }
 
 function parseServerGraphResponse(response) {
@@ -38,6 +51,9 @@ function parseServerGraphResponse(response) {
 }
 
 function parseServerGraphError(error) {
+  if(error && error.networkError) {
+    return error.networkError;
+  }
   if(!error || !error.graphQLErrors) { return error; }
   let results = [];
   for(let data of error.graphQLErrors) {

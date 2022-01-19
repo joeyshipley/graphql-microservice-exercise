@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import FETCHQL from '../../util/graphql.util';
 import ValidatableField from '../../components/forms/field-validatable.element';
+import Link from 'next/link';
 
 export default function RegisterPage() {
   const [ email, setEmail ] = useState('');
@@ -45,6 +46,12 @@ export default function RegisterPage() {
 
   return (
     <div>
+      <p>
+        <Link href="/">
+          <a>&laquo; Home</a>
+        </Link>
+      </p>
+
       <h1>Register</h1>
 
       <ValidatableField validations={ validations } property={ 'email' }>
@@ -79,6 +86,14 @@ export default function RegisterPage() {
         <button onClick={ register }>Register</button>
       </div>
 
+      <br />
+
+      <p>
+        Already registered? Head on over to
+        <Link href="/accounts/login">
+          <a> Login &raquo;</a>
+        </Link>
+      </p>
     </div>
   )
 }

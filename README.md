@@ -12,6 +12,9 @@
 - ``` BROWSER > http://localhost:3000 ```
 
 ### TODO
+- Web-Client: build test suite.
+- Web-Client: dockerize and attach to project docker-compose.
+- Web-Client: Explore/Determine if using IronSession with NextJS causes our app to have statefulness and keeps us from scaling horizontally.
 - Authentication Token Refresh (set expiration to 15-30 minutes when that happens).
 - Feature: Change Password
 - Feature: Verify Email Address
