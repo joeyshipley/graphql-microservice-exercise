@@ -1,4 +1,7 @@
-# TEMP README
+# Work In Progress - Learning Exercise
+
+### WARNING - Learning Exercise.
+A lot of this will be rough as I explore these concepts. It will eventually be cleaned up, but for now individual miles will vary.
 
 ### License
 - This repository is covered by the [MIT license](https://opensource.org/licenses/MIT).
