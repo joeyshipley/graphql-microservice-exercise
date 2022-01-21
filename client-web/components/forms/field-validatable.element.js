@@ -7,7 +7,7 @@ export default function ValidatableField(props) {
       <div>{ children }</div>
       { errors && errors.map((e, i) => {
         return (
-          <div key={ `validation-error-${ i }` }>{ e.value }</div>
+          <div role={ `${ property }-input-validation` } key={ `validation-error-${ i }` }>{ e.value }</div>
         );
       })}
     </div>

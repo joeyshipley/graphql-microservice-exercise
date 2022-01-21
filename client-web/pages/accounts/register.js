@@ -2,6 +2,7 @@ import { useState } from 'react'
 import FETCHQL from '../../util/graphql.util';
 import ValidatableField from '../../components/forms/field-validatable.element';
 import Link from 'next/link';
+import WINDOW from '../../util/window.util';
 
 export default function RegisterPage() {
   const [ email, setEmail ] = useState('');
@@ -32,7 +33,7 @@ export default function RegisterPage() {
     if(result.data && result.data.registerUser) {
       clearPage();
       alert(`You have registered! Now time to login.`);
-      window.location = '/accounts/login';
+      WINDOW.setLocation('/accounts/login');
     }
   };
 
@@ -56,34 +57,38 @@ export default function RegisterPage() {
 
       <ValidatableField validations={ validations } property={ 'email' }>
         <label htmlFor="email">Email</label>
-        <input id="email" type="text" placeholder="Email Address"
+        <input id="email" role="email-input"
+          type="text" placeholder="Email Address"
           value={ email } onChange={ (e) => setEmail(e.target.value) }
         />
       </ValidatableField>
 
       <ValidatableField validations={ validations } property={ 'username' }>
         <label htmlFor="username">Username</label>
-        <input id="username" type="text" placeholder="Username"
+        <input id="username" role="username-input"
+          type="text" placeholder="Username"
           value={ username } onChange={ (e) => setUsername(e.target.value) }
         />
       </ValidatableField>
 
       <ValidatableField validations={ validations } property={ 'password' }>
         <label htmlFor="password">Password</label>
-        <input id="password" type="password" placeholder="Password"
+        <input id="password" role="password-input"
+          type="password" placeholder="Password"
           value={ password } onChange={ (e) => setPassword(e.target.value) }
         />
       </ValidatableField>
 
       <ValidatableField validations={ validations } property={ 'passwordConfirmation' }>
         <label htmlFor="passwordConfirmation">Password Confirmation</label>
-        <input id="passwordConfirmation" type="password" placeholder="Repeat Password"
+        <input id="passwordConfirmation" role="passwordConfirmation-input"
+          type="password" placeholder="Repeat Password"
           value={ passwordConfirmation } onChange={ (e) => setPasswordConfirmation(e.target.value) }
         />
       </ValidatableField>
 
       <div>
-        <button onClick={ register }>Register</button>
+        <button role="register-action" onClick={ register }>Register</button>
       </div>
 
       <br />

@@ -2,12 +2,12 @@ import { ApolloClient, InMemoryCache, gql, ApolloLink, HttpLink } from '@apollo/
 import { ENV } from './environment-variables';
 
 const FETCHQL = {
-  query: performQueryCall,
-  mutate: performMutationCall,
+  query: query,
+  mutate: mutate,
 };
 export default FETCHQL;
 
-async function performQueryCall(graphCommandContent, options = {}) {
+export async function query(graphCommandContent, options = {}) {
   const client = getGraphClient(options);
   return await client.query({
     query: gql`${ graphCommandContent }`
@@ -16,7 +16,7 @@ async function performQueryCall(graphCommandContent, options = {}) {
     .catch(parseServerGraphError);
 }
 
-async function performMutationCall(graphCommandContent, options = {}) {
+async function mutate(graphCommandContent, options = {}) {
   const client = getGraphClient(options);
   return await client.mutate({
     mutation: gql`${ graphCommandContent }`

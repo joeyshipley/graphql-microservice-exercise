@@ -12,26 +12,26 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1>GraphQL MicroServices Project</h1>
+        <h1 role="heading">GraphQL MicroServices Project</h1>
 
         <Link href="/accounts/login">
-          <a>Login</a>
+          <a role="login-link">Login</a>
         </Link>
 
         <br />
 
         <Link href="/accounts/register">
-          <a>Register</a>
+          <a role="register-link">Register</a>
         </Link>
 
         <br />
 
         <Link href="/accounts/profile">
-          <a>Profile</a>
+          <a role="profile-link">Profile</a>
         </Link>
       </main>
 
-      <footer className={styles.footer}></footer>
+      <footer className={styles.footer}>&nbsp;</footer>
     </div>
   )
 }
